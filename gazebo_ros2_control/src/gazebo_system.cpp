@@ -22,6 +22,9 @@
 #include "gazebo/sensors/ImuSensor.hh"
 #include "gazebo/sensors/ForceTorqueSensor.hh"
 #include "gazebo/sensors/SensorManager.hh"
+
+#include "hardware_interface/types/hardware_interface_type_values.hpp"
+
 class gazebo_ros2_control::GazeboSystemPrivate
 {
 public:
@@ -346,6 +349,15 @@ void GazeboSystem::registerSensors(
   }
 }
 
+CallbackReturn
+GazeboSystem::on_init(const hardware_interface::HardwareInfo & actuator_info)
+{
+  if (hardware_interface::SystemInterface::on_init(actuator_info) != CallbackReturn::SUCCESS) {
+    return CallbackReturn::ERROR;
+  }
+  return CallbackReturn::SUCCESS;
+}
+
 std::vector<hardware_interface::StateInterface>
 GazeboSystem::export_state_interfaces()
 {
@@ -356,6 +368,16 @@ std::vector<hardware_interface::CommandInterface>
 GazeboSystem::export_command_interfaces()
 {
   return std::move(this->dataPtr->command_interfaces_);
+}
+
+CallbackReturn GazeboSystem::on_activate(const rclcpp_lifecycle::State & previous_state)
+{
+  return CallbackReturn::SUCCESS;
+}
+
+CallbackReturn GazeboSystem::on_deactivate(const rclcpp_lifecycle::State & previous_state)
+{
+  return CallbackReturn::SUCCESS;
 }
 
 hardware_interface::return_type GazeboSystem::read()

@@ -37,12 +37,20 @@ class GazeboSystemPrivate;
 class GazeboSystem : public GazeboSystemInterface
 {
 public:
+  // Documentation Inherited
+  CallbackReturn on_init(const hardware_interface::HardwareInfo & system_info) override;
 
   // Documentation Inherited
   std::vector<hardware_interface::StateInterface> export_state_interfaces() override;
 
   // Documentation Inherited
   std::vector<hardware_interface::CommandInterface> export_command_interfaces() override;
+
+  // Documentation Inherited
+  CallbackReturn on_activate(const rclcpp_lifecycle::State & previous_state) override;
+
+  // Documentation Inherited
+  CallbackReturn on_deactivate(const rclcpp_lifecycle::State & previous_state) override;
 
   // Documentation Inherited
   hardware_interface::return_type read() override;
