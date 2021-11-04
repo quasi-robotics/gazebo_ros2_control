@@ -304,9 +304,7 @@ void GazeboRosControlPlugin::Load(gazebo::physics::ModelPtr parent, sdf::Element
       return;
     }
 
-    gazeboSystem->set_state(rclcpp_lifecycle::State(lifecycle_msgs::msg::State::PRIMARY_STATE_INACTIVE, hardware_interface::lifecycle_state_names::INACTIVE));
-    resource_manager_->import_component(std::move(gazeboSystem));
-    resource_manager_->start_components();
+    resource_manager_->import_component(std::move(gazeboSystem), control_hardware[i]);
   }
 
   impl_->executor_ = std::make_shared<rclcpp::executors::MultiThreadedExecutor>();
