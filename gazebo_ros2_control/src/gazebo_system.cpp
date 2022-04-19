@@ -423,7 +423,7 @@ void GazeboSystem::registerSensors(
   }
 }
 
-CallbackReturn
+hardware_interface::CallbackReturn
 GazeboSystem::on_init(const hardware_interface::HardwareInfo & system_info)
 {
   if (hardware_interface::SystemInterface::on_init(system_info) != CallbackReturn::SUCCESS) {
@@ -444,12 +444,12 @@ GazeboSystem::export_command_interfaces()
   return std::move(this->dataPtr->command_interfaces_);
 }
 
-CallbackReturn GazeboSystem::on_activate(const rclcpp_lifecycle::State & previous_state)
+hardware_interface::CallbackReturn GazeboSystem::on_activate(const rclcpp_lifecycle::State & previous_state)
 {
   return CallbackReturn::SUCCESS;
 }
 
-CallbackReturn GazeboSystem::on_deactivate(const rclcpp_lifecycle::State & previous_state)
+hardware_interface::CallbackReturn GazeboSystem::on_deactivate(const rclcpp_lifecycle::State & previous_state)
 {
   return CallbackReturn::SUCCESS;
 }
