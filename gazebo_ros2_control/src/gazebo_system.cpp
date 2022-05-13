@@ -454,7 +454,7 @@ hardware_interface::CallbackReturn GazeboSystem::on_deactivate(const rclcpp_life
   return CallbackReturn::SUCCESS;
 }
 
-hardware_interface::return_type GazeboSystem::read()
+hardware_interface::return_type GazeboSystem::read(const rclcpp::Time & /*time*/, const rclcpp::Duration & /*period*/)
 {
   for (unsigned int j = 0; j < this->dataPtr->joint_names_.size(); j++) {
     if (this->dataPtr->sim_joints_[j]) {
@@ -493,13 +493,8 @@ hardware_interface::return_type GazeboSystem::read()
   return hardware_interface::return_type::OK;
 }
 
-hardware_interface::return_type GazeboSystem::write()
+hardware_interface::return_type GazeboSystem::write(const rclcpp::Time & time, const rclcpp::Duration & /*period*/)
 {
-  // Get the simulation time and period
-  gazebo::common::Time gz_time_now = this->dataPtr->parent_model_->GetWorld()->SimTime();
-  rclcpp::Time sim_time_ros(gz_time_now.sec, gz_time_now.nsec);
-  rclcpp::Duration sim_period = sim_time_ros - this->dataPtr->last_update_sim_time_ros_;
-
   // set values of all mimic joints with respect to mimicked joint
   for (const auto & mimic_joint : this->dataPtr->mimic_joints_) {
     if (this->dataPtr->joint_control_methods_[mimic_joint.joint_index] & POSITION &&
@@ -543,7 +538,7 @@ hardware_interface::return_type GazeboSystem::write()
     }
   }
 
-  this->dataPtr->last_update_sim_time_ros_ = sim_time_ros;
+  this->dataPtr->last_update_sim_time_ros_ = time;
 
   return hardware_interface::return_type::OK;
 }
