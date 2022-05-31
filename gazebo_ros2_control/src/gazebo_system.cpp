@@ -454,7 +454,9 @@ hardware_interface::CallbackReturn GazeboSystem::on_deactivate(const rclcpp_life
   return CallbackReturn::SUCCESS;
 }
 
-hardware_interface::return_type GazeboSystem::read(const rclcpp::Time & /*time*/, const rclcpp::Duration & /*period*/)
+hardware_interface::return_type GazeboSystem::read(
+  const rclcpp::Time & time,
+  const rclcpp::Duration & period)
 {
   for (unsigned int j = 0; j < this->dataPtr->joint_names_.size(); j++) {
     if (this->dataPtr->sim_joints_[j]) {
@@ -493,7 +495,9 @@ hardware_interface::return_type GazeboSystem::read(const rclcpp::Time & /*time*/
   return hardware_interface::return_type::OK;
 }
 
-hardware_interface::return_type GazeboSystem::write(const rclcpp::Time & time, const rclcpp::Duration & /*period*/)
+hardware_interface::return_type GazeboSystem::write(
+  const rclcpp::Time & time,
+  const rclcpp::Duration & period)
 {
   // set values of all mimic joints with respect to mimicked joint
   for (const auto & mimic_joint : this->dataPtr->mimic_joints_) {

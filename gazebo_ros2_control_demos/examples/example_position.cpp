@@ -27,7 +27,8 @@ rclcpp_action::ResultCode common_resultcode = rclcpp_action::ResultCode::UNKNOWN
 int common_action_result_code = control_msgs::action::FollowJointTrajectory_Result::SUCCESSFUL;
 
 void common_goal_response(
-  rclcpp_action::ClientGoalHandle<control_msgs::action::FollowJointTrajectory>::SharedPtr goal_handle)
+  rclcpp_action::ClientGoalHandle
+  <control_msgs::action::FollowJointTrajectory>::SharedPtr goal_handle)
 {
   RCLCPP_DEBUG(
     node->get_logger(), "common_goal_response time: %f",

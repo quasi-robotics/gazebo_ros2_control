@@ -52,7 +52,6 @@
 #include "hardware_interface/types/hardware_interface_type_values.hpp"
 #include "hardware_interface/types/lifecycle_state_names.hpp"
 
-#include "urdf/model.h"
 #include "yaml-cpp/yaml.h"
 
 using namespace std::chrono_literals;
@@ -379,6 +378,7 @@ void GazeboRosControlPrivate::Update()
 
   // Always set commands on joints, otherwise at low control frequencies the joints tremble
   // as they are updated at a fraction of gazebo sim time
+  // use same time as for read and update call - this is how it is done is ros2_control_node
   controller_manager_->write(sim_time_ros, sim_period);
 }
 
